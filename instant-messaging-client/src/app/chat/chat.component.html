@@ -1,0 +1,14 @@
+<div *ngIf="!service.isLogged()">
+    <span>Vous n'êtes pas connecté, cliquer </span>
+            <a routerLink="/login">ici</a>
+    <span> pour vous identifier.</span>
+</div>
+
+<div *ngIf="service.isLogged()">
+    <!--app-message-list></app-message-list-->
+    <!--app-connected-people-list></app-connected-people-list-->
+    <app-new-message-form></app-new-message-form>
+    <app-invitation-form></app-invitation-form>
+    <app-invitation-list></app-invitation-list>
+    <app-contact-list></app-contact-list>
+</div>
