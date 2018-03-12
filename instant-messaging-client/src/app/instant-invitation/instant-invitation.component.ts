@@ -18,5 +18,6 @@ private remove(): void {
 private onContact ():  void {
   this.service.onContact(this.invitation);
   this.service.removeInvitation(this.invitation);
+  this.service.sendContact(this.invitation);
 }
 }

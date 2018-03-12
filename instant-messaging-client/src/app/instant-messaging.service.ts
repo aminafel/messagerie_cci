@@ -33,8 +33,8 @@ export class InstantMessagingService {
     this.invitations.push(invitation[1]);
     console.log(this.invitations);
   }
- public  onContact(contact: string  ) {
-    this.contacts.push(contact);
+  private onDestContact(contact: string[]) {
+    this.contacts.push(contact[1]);
     console.log(this.contacts);
   }
 
@@ -50,7 +50,7 @@ export class InstantMessagingService {
       case 'connection': this.onConnection(message.data); break;
       case 'disconnection': this.onDisconnection(message.data); break;
       case 'invitation': this.onInvitation(message.data); break;
-      case 'contact': this.onContact(message.data); break;
+      case 'contact': this.onDestContact(message.data); break;
     }
   }
 
@@ -67,6 +67,11 @@ export class InstantMessagingService {
  
   public getMessages(): InstantMessage[] {
     return this.messages;
+  }
+
+  public  onContact(contact: string  ) {
+    this.contacts.push(contact);
+    console.log(this.contacts);
   }
 
   public getUsers(): string[] {
