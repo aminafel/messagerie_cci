@@ -22,18 +22,19 @@ export class Client {
         this.sendMessage('invitation', invitation);
 
     } 
-    public sendContact(contact: string){
-        this.sendMessage('conatct', contact);
-    }
+    
     private onInvitation(dest){
         if (!(typeof 'dest' === 'string')) return;
         if (!this.usernameRegex.test(dest)) return;
         this.server.broadcastInvitation(dest, this.username);
 
     }
-    private onContact(username){
-        this.username = username;
-        this.server.broadcastContact(username);
+    public sendContact(dest : string, username: string){
+        const contact:string[] = [dest, username];
+        this.sendMessage('contact', contact);
+    }
+    private onDestContact(dest){
+        this.server.broadcastContact(dest, this.username);
     }
 
    
@@ -73,7 +74,7 @@ export class Client {
             case 'instant_message': this.onInstantMessage(message.data); break;
             case 'username': this.onUsername(message.data); break;
             case 'invitation': this.onInvitation(message.data); break;
-            case 'contact': this.onContact(message.data);
+            case 'contact': this.onDestContact(message.data);
             
         }
     }

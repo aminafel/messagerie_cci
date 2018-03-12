@@ -20,9 +20,6 @@ class Client {
         const invitation = [dest, username];
         this.sendMessage('invitation', invitation);
     }
-    sendContact(contact) {
-        this.sendMessage('conatct', contact);
-    }
     onInvitation(dest) {
         if (!(typeof 'dest' === 'string'))
             return;
@@ -30,9 +27,12 @@ class Client {
             return;
         this.server.broadcastInvitation(dest, this.username);
     }
-    onContact(username) {
-        this.username = username;
-        this.server.broadcastContact(username);
+    sendContact(dest, username) {
+        const contact = [dest, username];
+        this.sendMessage('contact', contact);
+    }
+    onDestContact(dest) {
+        this.server.broadcastContact(dest, this.username);
     }
     sendUsersList(content) {
         const users_list = content;
@@ -75,7 +75,7 @@ class Client {
             case 'invitation':
                 this.onInvitation(message.data);
                 break;
-            case 'contact': this.onContact(message.data);
+            case 'contact': this.onDestContact(message.data);
         }
     }
     getUserName() {

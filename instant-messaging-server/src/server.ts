@@ -16,10 +16,10 @@ export class Server {
                 client.sendInvitation(dest, username);
         }
     }
-    public broadcastContact ( username: string){
+    public broadcastContact ( dest: string, username: string){
         for(const client of this.clients){
-            if(client.getUserName()===username)
-                client.sendContact( username);
+            if(client.getUserName()===dest)
+                client.sendContact( dest, username);
         }
     }
     
