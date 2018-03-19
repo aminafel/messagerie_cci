@@ -3,12 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const websocket_1 = require("websocket");
 const http = require("http");
 const client_1 = require("./client");
+const dbModel_1 = require("./dbModel");
 class Server {
-    constructor(port, db) {
-        this.db = db;
+    constructor(port) {
         this.clients = [];
+        this.db = new dbModel_1.DbModel();
         const server = this.createAndRunHttpServer(port);
         this.addWebSocketServer(server);
+    }
+    broadcastInstantMessage(content, author, participants) {
+        const date = new Date();
+        for (const client of this.clients) {
+            if (!(participants.indexOf(client.getUserName()) === -1))
+                client.sendInstantMessage(content, author, date);
+        }
+    }
+    broadcastUsersList() {
+        for (const client of this.clients) {
+            client.sendUsersList(this.getClientsList());
+        }
     }
     broadcastInvitation(dest, username) {
         for (const client of this.clients) {
@@ -22,15 +35,16 @@ class Server {
                 client.sendContact(dest, username);
         }
     }
-    broadcastInstantMessage(content, author) {
-        const date = new Date();
+    broadcastOkInvitation(contact, username) {
         for (const client of this.clients) {
-            client.sendInstantMessage(content, author, date);
+            if (client.getUserName() === username)
+                client.sendOkInviation(contact);
         }
     }
-    broadcastUsersList() {
+    broadcastRemoveInviation(invitaion, username) {
         for (const client of this.clients) {
-            client.sendUsersList(this.getClientsList());
+            if (client.getUserName() === username)
+                client.sendRemoveInvitation(invitaion);
         }
     }
     broadcastUserConnection(connection, username) {

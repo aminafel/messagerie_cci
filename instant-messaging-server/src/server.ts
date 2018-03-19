@@ -1,32 +1,22 @@
 import {server as WebSocketServer, connection as WebSocketConnection} from 'websocket';
 import * as http from 'http';
 import { Client } from "./client";
-import { Db } from "./db";
+import { DbModel } from "./dbModel";
 
 export class Server {
     private clients: Client[] = []
-    
-    public constructor(port: number, private db: Db) {
+    db: DbModel = new DbModel();
+        
+    public constructor(port: number) {
         const server = this.createAndRunHttpServer(port);
         this.addWebSocketServer(server);
     }
-    public broadcastInvitation (dest: string, username: string){
-        for(const client of this.clients){
-            if(client.getUserName()===dest)
-                client.sendInvitation(dest, username);
-        }
-    }
-    public broadcastContact ( dest: string, username: string){
-        for(const client of this.clients){
-            if(client.getUserName()===dest)
-                client.sendContact( dest, username);
-        }
-    }
-    
-    public broadcastInstantMessage(content: string, author: string): void {
+       
+    public broadcastInstantMessage(content: string, author: string, participants: string[]): void {
         const date = new Date();
         for (const client of this.clients) {
-          client.sendInstantMessage(content, author, date);
+            if (!(participants.indexOf(client.getUserName())===-1))
+              client.sendInstantMessage(content, author, date);
         }
       }
     
@@ -35,6 +25,35 @@ export class Server {
           client.sendUsersList(this.getClientsList());
         }
       }
+
+    public broadcastInvitation (dest: string, username: string){
+        for(const client of this.clients){
+            if(client.getUserName()===dest)
+                client.sendInvitation(dest, username);
+        }
+    }
+    
+    public broadcastContact(dest: string , username: string ){
+        for(const client of this.clients){
+            if (client.getUserName() === dest)
+               client.sendContact(dest, username);
+        }
+    }
+    public broadcastOkInvitation(contact: string , username: string ){
+        for(const client of this.clients){
+            if (client.getUserName() === username)
+               client.sendOkInviation( contact );
+        }
+
+    }
+    public broadcastRemoveInviation(invitaion: string, username: string ){
+        for(const client of this.clients){
+            if (client.getUserName() === username)
+               client.sendRemoveInvitation(invitaion );
+        }
+
+
+    }
 
     public broadcastUserConnection(connection: string, username: string): void {
         switch (connection) {
@@ -54,6 +73,7 @@ export class Server {
         }
         return usersList;
     }
+    
 
     private createAndRunHttpServer(port: number): http.Server {
         const server = http.createServer(function(request, response) {
@@ -83,5 +103,4 @@ export class Server {
     removeClient(client: Client) {
         this.clients.splice(this.clients.indexOf(client), 1);
     }
-
 }
