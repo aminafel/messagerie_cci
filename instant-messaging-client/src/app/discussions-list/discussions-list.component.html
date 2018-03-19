@@ -1,0 +1,10 @@
+<p>Liste des discussions</p>
+
+<ul class="discussions">
+  <li *ngFor="let discussion of service.getDiscussions()"
+    [class.selected]="discussion === selectedDiscussion" 
+    (click)="onSelect(discussion)">
+    <!--<span class="badge">{{discussion.id}}</span> -->
+    {{discussion.participants}}
+  </li>
+</ul>

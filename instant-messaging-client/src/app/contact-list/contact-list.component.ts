@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InstantMessagingService } from '../instant-messaging.service';
+import { DiscussionsListItem } from '../discussions-list-item';
 
 @Component({
   selector: 'app-contact-list',
@@ -9,4 +10,7 @@ import { InstantMessagingService } from '../instant-messaging.service';
 export class ContactListComponent {
   constructor(private service: InstantMessagingService) { }
 
+  private onSelect(contact: string) {
+    this.service.askDiscussion(contact);
+  }
 }

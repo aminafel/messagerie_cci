@@ -1,3 +1,23 @@
+#bar {
+    color: white;
+    justify-content: center;
+}
+
+.buttonLog {
+    text-align: center;
+}
+    
+.ensemble {
+    text-align: center;
+}
+
+mat-card {
+   max-width: 20%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .password-form {
     position:fixed;
     width:300px;

@@ -8,16 +8,16 @@ import { InstantMessagingService } from 'app/instant-messaging.service';
 })
 export class InstantInvitationComponent  {
   @Input()
-invitation: string;
-constructor(private service: InstantMessagingService) { }
+  invitation: string;
+  constructor(private service: InstantMessagingService) { }
 
-private remove(): void {
-  this.service.removeInvitation(this.invitation);
-  
-}
-private onContact ():  void {
-  this.service.onContact(this.invitation);
-  this.service.removeInvitation(this.invitation);
-  this.service.sendContact(this.invitation);
-}
-}
+  private remove(): void {
+    this.service.sendRemooveInvitation(this.invitation);
+  }
+
+  private onContact ():  void {
+    this.service.sendOkInvitation(this.invitation);
+    this.service.sendRemooveInvitation(this.invitation);
+    this.service.sendContact(this.invitation);
+    }
+  }
