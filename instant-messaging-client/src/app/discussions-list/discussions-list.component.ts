@@ -15,4 +15,8 @@ export class DiscussionsListComponent {
   private onSelect(discussion: DiscussionsListItem) {
     this.service.sendFetchDiscussion(discussion.id);
   }
+
+  private quitDiscussion(discussionId: string) {
+    this.service.sendQuitDiscussion();
+  }
 }

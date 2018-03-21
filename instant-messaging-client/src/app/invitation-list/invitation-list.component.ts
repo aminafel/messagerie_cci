@@ -9,3 +9,6 @@ import { InstantMessagingService } from '../instant-messaging.service';
 export class InvitationListComponent {
   constructor(private service: InstantMessagingService) { }
 }
+
+
+

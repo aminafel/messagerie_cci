@@ -4,7 +4,9 @@
   <li *ngFor="let discussion of service.getDiscussions()"
     [class.selected]="discussion === selectedDiscussion" 
     (click)="onSelect(discussion)">
-    <!--<span class="badge">{{discussion.id}}</span> -->
+    <span class="badge">{{discussion.id}}
     {{discussion.participants}}
+    <button (click)="quitDiscussion(discussion.id)">x</button>
+  </span>
   </li>
 </ul>

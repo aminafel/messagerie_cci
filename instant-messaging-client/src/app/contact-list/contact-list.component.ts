@@ -13,4 +13,9 @@ export class ContactListComponent {
   private onSelect(contact: string) {
     this.service.askDiscussion(contact);
   }
+
+  private addParticipant(contact: string) {
+    this.service.sendAddParticipant(contact);
+  }
+
 }

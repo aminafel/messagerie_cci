@@ -12,10 +12,17 @@
 }
 
 mat-card {
-   max-width: 20%;
+    margin-top: 150px;
+     max-width: 20%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+}
+
+app-root{
+    margin-left: middle;
+    margin-right: middle;
+    vertical-align: middle;
 }
 
 .password-form {

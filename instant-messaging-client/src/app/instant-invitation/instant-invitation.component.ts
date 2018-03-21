@@ -12,12 +12,13 @@ export class InstantInvitationComponent  {
   constructor(private service: InstantMessagingService) { }
 
   private remove(): void {
-    this.service.sendRemooveInvitation(this.invitation);
+    this.service.sendRemoveInvitation(this.invitation);
   }
 
   private onContact ():  void {
     this.service.sendOkInvitation(this.invitation);
-    this.service.sendRemooveInvitation(this.invitation);
+    this.service.sendRemoveInvitation(this.invitation);
     this.service.sendContact(this.invitation);
     }
   }
+
